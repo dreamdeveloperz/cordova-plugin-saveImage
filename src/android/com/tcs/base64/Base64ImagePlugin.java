@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
 import android.content.Context;
+import android.app.Application
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -31,10 +32,20 @@ public class Base64ImagePlugin extends CordovaPlugin {
      * @param callbackId The callback id used when calling back into JavaScript.
      * @return A PluginResult object with a status and message.
      */
+    private static Application sApplication;
+
+    public static Application getApplication() {
+        return sApplication;
+    }
+
+    public static Context getContext() {
+        return getApplication().getApplicationContext();
+    }
+
     public PluginResult execute(String action, JSONArray args, String callbackId) {
-
+        sApplication = this;
         System.out.println(action);
-
+        Context context = getContext();
         if (!action.equals("saveImage")) {
             return new PluginResult(PluginResult.Status.INVALID_ACTION);
         }
@@ -54,7 +65,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() :Context.getFilesDir();
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() : context.getFilesDir().getAbsolutePath();
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
