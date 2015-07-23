@@ -40,6 +40,7 @@
        
 
       
+        <source-file src="src/android/libs/commons-codec-1.10.jar" target-dir="libs/" />
         <source-file src="src/android/com/tcs/base64/Base64.java" target-dir="src/com/tcs/base64/" />
         <source-file src="src/android/com/tcs/base64/Base64ImagePlugin.java" target-dir="src/com/tcs/base64/" />
 
