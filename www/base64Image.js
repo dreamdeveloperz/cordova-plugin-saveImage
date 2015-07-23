@@ -1,7 +1,7 @@
 var Base64Image = function() {
 };
 Base64Image.prototype.saveImage=function(successCallback,errorCallback,base64String, params){
-    cordova.exec(successCallback, errorCallback, "SaveImagePlugin", "saveImage", [base64String,params]);
+    cordova.exec(successCallback, errorCallback, "Base64ImagePlugin", "saveImage", [base64String,params]);
 };
 
 
