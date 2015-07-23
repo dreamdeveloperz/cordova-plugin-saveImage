@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
+import android.content.Context;
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -53,7 +54,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() :getFilesDir();
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() :Context.getFilesDir();
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
