@@ -48,7 +48,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
         Log.v(TAG,action);
 //        Context context = getContext();
         if (!action.equals("saveImage")) {
-            return new PluginResult(PluginResult.Status.INVALID_ACTION);
+            return new PluginResult(PluginResult.Status.INVALID_ACTION,action);
         }
 
         try {
