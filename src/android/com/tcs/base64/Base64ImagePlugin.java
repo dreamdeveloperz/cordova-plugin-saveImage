@@ -22,7 +22,7 @@ import org.apache.commons.codec.binary.Base64;
  * This class echoes a string called from JavaScript.
  */
 public class Base64ImagePlugin extends CordovaPlugin {
-
+    public static final String TAG = "Base64Image";
     /**
      * Executes the request and returns PluginResult.
      *
@@ -43,15 +43,16 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
     public PluginResult execute(String action, JSONArray args, String callbackId) {
 //        sApplication = this;
-        System.out.println(action);
+       
+        Log.v(TAG,action);
 //        Context context = getContext();
         if (!action.equals("saveImage")) {
             return new PluginResult(PluginResult.Status.INVALID_ACTION);
         }
 
         try {
-            System.out.println(args.getString(0));
-            System.out.println(args.getJSONObject(1).toString());
+            Log.v(TAG,args.getString(0));
+            Log.v(TAG,args.getJSONObject(1).toString());
             String b64String = args.getString(0);
             if (b64String.startsWith("data:image")) {
                 b64String = b64String.substring(22);
@@ -77,11 +78,11 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
         } catch (JSONException e) {
 
-            e.printStackTrace();
+            Log.v(TAG,"json exception");
             return new PluginResult(PluginResult.Status.JSON_EXCEPTION, e.getMessage());
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.v(TAG,"InterruptedException");
             return new PluginResult(PluginResult.Status.ERROR, e.getMessage());
         }
 
@@ -100,6 +101,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
             //Avoid overwriting a file
             if (!overwrite && file.exists()) {
+                Log.v(TAG,"File already exists");
                 return new PluginResult(PluginResult.Status.OK, "File already exists!");
             }
 
@@ -111,12 +113,14 @@ public class Base64ImagePlugin extends CordovaPlugin {
             FileOutputStream fOut = new FileOutputStream(file);
             fOut.write(decodedBytes);
             fOut.close();
-
+            Log.v(TAG,"Saved successfully");
             return new PluginResult(PluginResult.Status.OK, "Saved successfully!");
 
         } catch (FileNotFoundException e) {
+            Log.v(TAG,"File not Found");
             return new PluginResult(PluginResult.Status.ERROR, "File not Found!");
         } catch (IOException e) {
+            Log.v(TAG, e.getMessage());
             return new PluginResult(PluginResult.Status.ERROR, e.getMessage());
         }
 
