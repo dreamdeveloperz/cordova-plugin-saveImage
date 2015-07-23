@@ -31,7 +31,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
      * @param callbackId The callback id used when calling back into JavaScript.
      * @return A PluginResult object with a status and message.
      */
-    private static Application sApplication;
+//    private static Application sApplication;
 
 //    public static Application getApplication() {
 //        return sApplication;
@@ -64,7 +64,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() : "weave";
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory()+"" : "weave";
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
