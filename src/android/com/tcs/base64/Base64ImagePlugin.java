@@ -34,18 +34,18 @@ public class Base64ImagePlugin extends CordovaPlugin {
      */
     private static Application sApplication;
 
-    public static Application getApplication() {
-        return sApplication;
-    }
-
-    public static Context getContext() {
-        return getApplication().getApplicationContext();
-    }
+//    public static Application getApplication() {
+//        return sApplication;
+//    }
+//
+//    public static Context getContext() {
+//        return getApplication().getApplicationContext();
+//    }
 
     public PluginResult execute(String action, JSONArray args, String callbackId) {
-        sApplication = this;
+//        sApplication = this;
         System.out.println(action);
-        Context context = getContext();
+//        Context context = getContext();
         if (!action.equals("saveImage")) {
             return new PluginResult(PluginResult.Status.INVALID_ACTION);
         }
@@ -65,7 +65,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() : context.getFilesDir().getAbsolutePath();
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() : "weave";
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
