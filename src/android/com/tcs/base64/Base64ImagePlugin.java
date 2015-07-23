@@ -17,7 +17,6 @@ import java.io.IOException;
 import android.os.Environment;
 import org.apache.commons.codec.binary.Base64;
 
-
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -26,19 +25,22 @@ public class Base64ImagePlugin extends CordovaPlugin {
     /**
      * Executes the request and returns PluginResult.
      *
-     * @param action        The action to execute.
-     * @param args          JSONArry of arguments for the plugin.
-     * @param callbackId    The callback id used when calling back into JavaScript.
-     * @return              A PluginResult object with a status and message.
+     * @param action The action to execute.
+     * @param args JSONArry of arguments for the plugin.
+     * @param callbackId The callback id used when calling back into JavaScript.
+     * @return A PluginResult object with a status and message.
      */
     public PluginResult execute(String action, JSONArray args, String callbackId) {
+
+        System.out.println(action);
 
         if (!action.equals("saveImage")) {
             return new PluginResult(PluginResult.Status.INVALID_ACTION);
         }
 
         try {
-
+            System.out.println(args.getString(0));
+            System.out.println(args.getJSONObject(1).toString());
             String b64String = args.getString(0);
             if (b64String.startsWith("data:image")) {
                 b64String = b64String.substring(22);
@@ -51,13 +53,13 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() :getFilesDir();
             String folder = params.has("folder")
                     ? params.getString("folder")
-                    : Environment.getExternalStorageDirectory() + "/Pictures";
+                    : storagetype + "/Pictures";
 
-            Boolean overwrite = params.has("overwrite") 
-                    ? params.getBoolean("overwrite") 
+            Boolean overwrite = params.has("overwrite")
+                    ? params.getBoolean("overwrite")
                     : false;
 
             return this.saveImage(b64String, filename, folder, overwrite, callbackId);
@@ -98,7 +100,6 @@ public class Base64ImagePlugin extends CordovaPlugin {
             FileOutputStream fOut = new FileOutputStream(file);
             fOut.write(decodedBytes);
             fOut.close();
-
 
             return new PluginResult(PluginResult.Status.OK, "Saved successfully!");
 
