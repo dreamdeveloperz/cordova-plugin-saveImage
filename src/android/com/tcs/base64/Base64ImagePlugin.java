@@ -15,8 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
-import android.content.Context;
-import android.app.Application
+
 import org.apache.commons.codec.binary.Base64;
 
 /**
