@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
+import android.util.Log;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -43,7 +44,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
     public PluginResult execute(String action, JSONArray args, String callbackId) {
 //        sApplication = this;
-       
+
         Log.v(TAG,action);
 //        Context context = getContext();
         if (!action.equals("saveImage")) {
@@ -51,8 +52,8 @@ public class Base64ImagePlugin extends CordovaPlugin {
         }
 
         try {
-            Log.v(TAG,args.getString(0));
-            Log.v(TAG,args.getJSONObject(1).toString());
+            Log.v(TAG, args.getString(0));
+            Log.v(TAG, args.getJSONObject(1).toString());
             String b64String = args.getString(0);
             if (b64String.startsWith("data:image")) {
                 b64String = b64String.substring(22);
@@ -82,7 +83,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             return new PluginResult(PluginResult.Status.JSON_EXCEPTION, e.getMessage());
 
         } catch (InterruptedException e) {
-            Log.v(TAG,"InterruptedException");
+            Log.v(TAG, "InterruptedException");
             return new PluginResult(PluginResult.Status.ERROR, e.getMessage());
         }
 
