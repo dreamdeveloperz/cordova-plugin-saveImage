@@ -49,7 +49,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
         if (!action.equals("saveImage")) {
 
             callbackContext.error("Invalid action : " + action);
-            result=false;
+            result = false;
         }
 
         try {
@@ -76,22 +76,18 @@ public class Base64ImagePlugin extends CordovaPlugin {
                     ? params.getBoolean("overwrite")
                     : false;
 
-            result= this.saveImage(b64String, filename, folder, overwrite, callbackContext);
+            result = this.saveImage(b64String, filename, folder, overwrite, callbackContext);
 
-        } catch (InterruptedException e) {
-            Log.v(TAG, e.getMessage());
-            callbackContext.error("Exception :" + e.getMessage());
-            result= false;
         } catch (JSONException e) {
             Log.v(TAG, e.getMessage());
             callbackContext.error("Exception :" + e.getMessage());
-            result= false;
+            result = false;
         }
         return result;
     }
 
     private boolean saveImage(String b64String, String fileName, String dirName, Boolean overwrite, CallbackContext callbackContext) {
-
+        boolean result = false;
         try {
 
             //Directory and File
@@ -120,25 +116,25 @@ public class Base64ImagePlugin extends CordovaPlugin {
             Log.v(TAG, "Saved successfully");
             callbackContext.success("Saved successfully!");
 //            return new PluginResult(PluginResult.Status.OK, "Saved successfully!");
-            return true;
+            result = true;
 
         } catch (FileNotFoundException e) {
             Log.v(TAG, "File not Found");
 //            return new PluginResult(PluginResult.Status.ERROR, "File not Found!");
             callbackContext.error("File not Found!");
-            return false;
+            result = false;
         } catch (IOException e) {
             Log.v(TAG, e.getMessage());
 //            return new PluginResult(PluginResult.Status.ERROR, e.getMessage());
             callbackContext.error("Exception :" + e.getMessage());
-            return false;
-        } 
-
+            result = false;
+        }
+        return result;
     }
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        
+
     }
 }
