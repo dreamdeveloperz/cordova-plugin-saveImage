@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package com.tcs.base64;
-
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,9 +46,9 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
         Log.v(TAG, action);
 //        Context context = getContext();
-        if (!action.equals("saveImage")) {
-            return new PluginResult(PluginResult.Status.INVALID_ACTION, action);
-        }
+//        if (!action.equals("saveImage")) {
+//            return new PluginResult(PluginResult.Status.INVALID_ACTION, action);
+//        }
 
         try {
             Log.v(TAG, args.getString(0));
@@ -122,5 +124,10 @@ public class Base64ImagePlugin extends CordovaPlugin {
             return new PluginResult(PluginResult.Status.ERROR, e.getMessage());
         }
 
+    }
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        gForeground = true;
     }
 }
