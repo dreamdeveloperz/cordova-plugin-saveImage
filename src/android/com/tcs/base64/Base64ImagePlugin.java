@@ -68,7 +68,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
                     ? params.getString("filename")+".png"
                     : "b64Image_" + System.currentTimeMillis() + ".png";
             String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() + "" : getApplicationContext().getFilesDir().getAbsolutePath();
-            callbackContext.error(Environment.getExternalStorageDirectory()+"");
+            callbackContext.error("external =="+Environment.getExternalStorageDirectory());
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
