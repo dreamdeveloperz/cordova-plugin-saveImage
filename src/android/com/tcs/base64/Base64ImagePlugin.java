@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
 import android.util.Log;
+import android.content.Context;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -23,7 +24,9 @@ import org.apache.commons.codec.binary.Base64;
  * This class echoes a string called from JavaScript.
  */
 public class Base64ImagePlugin extends CordovaPlugin {
+
     public static final String TAG = "Base64Image";
+
     /**
      * Executes the request and returns PluginResult.
      *
@@ -32,23 +35,17 @@ public class Base64ImagePlugin extends CordovaPlugin {
      * @param callbackId The callback id used when calling back into JavaScript.
      * @return A PluginResult object with a status and message.
      */
-//    private static Application sApplication;
-
-//    public static Application getApplication() {
-//        return sApplication;
-//    }
-//
-//    public static Context getContext() {
-//        return getApplication().getApplicationContext();
-//    }
+    private Context getApplicationContext() {
+        return this.cordova.getActivity().getApplicationContext();
+    }
 
     public PluginResult execute(String action, JSONArray args, String callbackId) {
 //        sApplication = this;
 
-        Log.v(TAG,action);
+        Log.v(TAG, action);
 //        Context context = getContext();
         if (!action.equals("saveImage")) {
-            return new PluginResult(PluginResult.Status.INVALID_ACTION,action);
+            return new PluginResult(PluginResult.Status.INVALID_ACTION, action);
         }
 
         try {
@@ -66,7 +63,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
             String filename = params.has("filename")
                     ? params.getString("filename")
                     : "b64Image_" + System.currentTimeMillis() + ".png";
-            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory()+"" : "weave";
+            String storagetype = params.has("externalStorage") ? Environment.getExternalStorageDirectory() + "" : getApplicationContext().getFilesDir().getAbsolutePath();
             String folder = params.has("folder")
                     ? params.getString("folder")
                     : storagetype + "/Pictures";
@@ -79,7 +76,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
         } catch (JSONException e) {
 
-            Log.v(TAG,"json exception");
+            Log.v(TAG, "json exception");
             return new PluginResult(PluginResult.Status.JSON_EXCEPTION, e.getMessage());
 
         } catch (InterruptedException e) {
@@ -102,7 +99,7 @@ public class Base64ImagePlugin extends CordovaPlugin {
 
             //Avoid overwriting a file
             if (!overwrite && file.exists()) {
-                Log.v(TAG,"File already exists");
+                Log.v(TAG, "File already exists");
                 return new PluginResult(PluginResult.Status.OK, "File already exists!");
             }
 
@@ -114,11 +111,11 @@ public class Base64ImagePlugin extends CordovaPlugin {
             FileOutputStream fOut = new FileOutputStream(file);
             fOut.write(decodedBytes);
             fOut.close();
-            Log.v(TAG,"Saved successfully");
+            Log.v(TAG, "Saved successfully");
             return new PluginResult(PluginResult.Status.OK, "Saved successfully!");
 
         } catch (FileNotFoundException e) {
-            Log.v(TAG,"File not Found");
+            Log.v(TAG, "File not Found");
             return new PluginResult(PluginResult.Status.ERROR, "File not Found!");
         } catch (IOException e) {
             Log.v(TAG, e.getMessage());
